@@ -20,6 +20,8 @@ public class GUI extends JFrame {
         this.setSize(1280, 820);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
+        this.setResizable(true);
+        // test commit
         this.setResizable(false);
 
         Board board = new Board();
@@ -103,7 +105,6 @@ public class GUI extends JFrame {
             // TODO Auto-generated method stub
             // throw new UnsupportedOperationException("Unimplemented method 'mouseExited'");
         }
-        
     }
     
 }
