@@ -13,5 +13,5 @@ public class Main implements Runnable {
         while (true) {
             gui.repaint();
         }
-    }// halooo mettt
+    }
 }
