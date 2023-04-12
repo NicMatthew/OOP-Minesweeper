@@ -1,5 +1,4 @@
 public class Main implements Runnable {
-    // test jesslyn
     GUI gui = new GUI();
 
     public static void main(String[] args) {

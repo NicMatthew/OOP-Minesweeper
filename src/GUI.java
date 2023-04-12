@@ -4,13 +4,20 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 // /testtttttt
+import java.util.ArrayList;
 
 public class GUI extends JFrame {
     int spacing = 5;
     int boxWidth = 80;
-    public GUI(){
+
+    int mx = -100;
+    int my = -100;
+    ArrayList<Integer> cx = new ArrayList<>();
+    ArrayList<Integer> cy = new ArrayList<>();
+
+    public GUI() {
         this.setTitle("mineswepper");
-        this.setSize(1286,829);
+        this.setSize(1295, 838);
         this.setDefaultCloseOperation(3);
         this.setVisible(true);
         Board board = new Board();
@@ -21,19 +28,40 @@ public class GUI extends JFrame {
         this.addMouseListener(click);
     }
 
-    public class Board extends JPanel{
-        public void paintComponent(Graphics g){
+    public class Board extends JPanel {
+        public void paintComponent(Graphics g) {
             g.setColor(Color.darkGray);
-            g.fillRect(0,0,1280,800);
+            g.fillRect(0, 0, 1280, 800);
             g.setColor(Color.gray);
             for (int i = 0; i < 16; i++) {
                 for (int j = 0; j < 9; j++) {
-                    g.fillRect(spacing+i*boxWidth,spacing+j*boxWidth+boxWidth,boxWidth-2*spacing,boxWidth-2*spacing);
+                    for (int j2 = 0; j2 < cx.size(); j2++) {
+                        if ((cx.get(j2) >= 8 + spacing + i * boxWidth) && (cx.get(j2) <= 8 + spacing + i * boxWidth +
+                                boxWidth - 2 * spacing)) {
+                            if ((cy.get(j2) >= 110 + spacing + j * boxWidth) && (cy.get(j2) <= 110 + spacing + j * boxWidth +
+                                    boxWidth - 2 * spacing)) {
+                                g.setColor(Color.blue);
+                            }
+                        }
+                    }
+                    if ((mx >= 8 + spacing + i * boxWidth) && (mx <= 8 + spacing + i * boxWidth +
+                            boxWidth - 2 * spacing)) {
+                        if ((my >= 110 + spacing + j * boxWidth) && (my <= 110 + spacing + j * boxWidth +
+                                boxWidth - 2 * spacing)) {
+                            g.setColor(Color.red);
+                        }
+                    }
+                    
+
+                    g.fillRect(spacing + i * boxWidth, spacing + j * boxWidth + boxWidth, boxWidth - 2 * spacing,
+                            boxWidth - 2 * spacing);
+                    g.setColor(Color.gray);
                 }
             }
         }
     }
-    public class  Move implements MouseMotionListener{
+
+    public class Move implements MouseMotionListener {
 
         @Override
         public void mouseDragged(MouseEvent e) {
@@ -42,15 +70,22 @@ public class GUI extends JFrame {
 
         @Override
         public void mouseMoved(MouseEvent e) {
-            System.out.println("moved");
+            // System.out.println("moved");
+            mx = e.getX();
+            my = e.getY();
+            // System.out.println("X : " + mx + " Y : " + my);
         }
     }
 
-    public class CLick implements MouseListener{
+    public class CLick implements MouseListener {
 
         @Override
         public void mouseClicked(MouseEvent e) {
             System.out.println("Clicked");
+            cx.add(e.getX());
+            cy.add(e.getY());
+
+            // System.out.println("X : " + cx + " Y : " + cy);
         }
 
         @Override
