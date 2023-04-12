@@ -1,2 +1,0 @@
-
-                        g.setColor(Color.red); 
