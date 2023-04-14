@@ -13,7 +13,7 @@ public class MenuStart {
         panelJudul.setBounds(0, 200, 780, 100);
         JLabel judul = new JLabel();
 
-        ImageIcon lama = new ImageIcon("logo.png");
+        ImageIcon lama = new ImageIcon("Assets/logo.png");
         Image lama1 = lama.getImage();
         Image baru1 = lama1.getScaledInstance(700, 90, java.awt.Image.SCALE_SMOOTH);
         ImageIcon gambarJudul = new ImageIcon(baru1);
@@ -21,6 +21,23 @@ public class MenuStart {
         judul.setIcon(gambarJudul);
         // judul.setBounds(0,0,500,100);
         panelJudul.add(judul);
+
+
+
+        JPanel panel = new JPanel(new GridLayout(2, 1));
+        panel.setBounds(0, 350, 780, 300);
+        panel.setBackground(Color.red);
+        JLabel start = new JLabel();
+
+        start.setIcon(new ImageIcon("Assets/start.png"));
+        start.setHorizontalAlignment(JLabel.CENTER);
+        JLabel quit = new JLabel();
+        quit.setIcon(new ImageIcon("Assets/quit.png"));
+        quit.setHorizontalAlignment(JLabel.CENTER);
+        panel.add(start);
+        panel.add(quit);
+
+
 
         
         
@@ -30,7 +47,7 @@ public class MenuStart {
         
         
         JLabel bg = new JLabel();
-        bg.setIcon(new ImageIcon("background.png"));
+        bg.setIcon(new ImageIcon("Assets/background.png"));
         Dimension size = bg.getPreferredSize();
         bg.setBounds(0,0,size.width,size.height);
 
@@ -44,7 +61,8 @@ public class MenuStart {
         frame.setResizable(false);
         // frame.setContentPane();
         // frame.add(background);
-        frame.add(panelJudul, BorderLayout.NORTH);
+        frame.add(panelJudul);
+        frame.add(panel);
         Container c = frame.getContentPane();
         c.add(bg);
         frame.setVisible(true);
