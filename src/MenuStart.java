@@ -13,6 +13,8 @@ public class MenuStart extends JFrame implements MouseListener{
 
         return baru;
     }
+    JLabel start = new JLabel();
+    JLabel quit = new JLabel();
 
     public MenuStart() {
         JPanel panelJudul = new JPanel();
@@ -32,10 +34,11 @@ public class MenuStart extends JFrame implements MouseListener{
         panel.setBounds(0, 350, 780, 300);
         panel.setOpaque(false);
         panel.setBackground(new Color(0, 0, 0,0));
-        JLabel start = new JLabel();
-        JLabel quit = new JLabel();
+        
         ImageIcon startImage = new ImageIcon("Assets/start.png");
         ImageIcon quitImage = new ImageIcon("Assets/quit.png");
+        ImageIcon startImageHover = new ImageIcon("Assets/start_hover.png");
+        ImageIcon quitImageHover = new ImageIcon("Assets/quit_hover.png");
 
         start.setIcon(imageResize(startImage, 300, 150));
         start.setHorizontalAlignment(JLabel.CENTER);
@@ -43,7 +46,7 @@ public class MenuStart extends JFrame implements MouseListener{
         quit.setHorizontalAlignment(JLabel.CENTER);
         panel.add(start);
         panel.add(quit);
-        
+        start.addMouseListener(this);
         JLabel bg = new JLabel();
         bg.setIcon(new ImageIcon("Assets/background.png"));
         Dimension size = bg.getPreferredSize();
@@ -70,31 +73,32 @@ public class MenuStart extends JFrame implements MouseListener{
     @Override
     public void mouseClicked(MouseEvent e) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mouseClicked'");
+        // throw new UnsupportedOperationException("Unimplemented method 'mouseClicked'");
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mousePressed'");
+        // throw new UnsupportedOperationException("Unimplemented method 'mousePressed'");
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mouseReleased'");
+        // throw new UnsupportedOperationException("Unimplemented method 'mouseReleased'");
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mouseEntered'");
+        
+        // throw new UnsupportedOperationException("Unimplemented method 'mouseEntered'");
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mouseExited'");
+        // throw new UnsupportedOperationException("Unimplemented method 'mouseExited'");
     }
 
 }
