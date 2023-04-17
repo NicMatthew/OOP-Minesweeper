@@ -1,19 +1,20 @@
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-public class MenuStart {
+public class MenuStart extends JFrame implements MouseListener{
     public static ImageIcon imageResize(ImageIcon image, int width, int height) {
         ImageIcon lama = image;
         Image lama1 = lama.getImage();
         Image baru1 = lama1.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
         ImageIcon baru = new ImageIcon(baru1);
-        
+
         return baru;
     }
 
-    public static void main(String[] args) {
+    public MenuStart() {
         JPanel panelJudul = new JPanel();
         // panelJudul.setBackground(Color.red);
         panelJudul.setOpaque(false);
@@ -42,39 +43,58 @@ public class MenuStart {
         quit.setHorizontalAlignment(JLabel.CENTER);
         panel.add(start);
         panel.add(quit);
-
-
-
-        
-        
-
-
-
-        
         
         JLabel bg = new JLabel();
         bg.setIcon(new ImageIcon("Assets/background.png"));
         Dimension size = bg.getPreferredSize();
-        bg.setBounds(0,0,size.width,size.height);
-
-
-        JFrame frame = new JFrame();
-        // frame.setIconImage(img.getImage());
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 800);
-        frame.setLayout(null);
-        frame.setTitle("MINESWEEPER");
-        frame.setResizable(false);
-        // frame.setContentPane();
-        // frame.add(background);
-        frame.add(panelJudul);
-        frame.add(panel);
-        Container c = frame.getContentPane();
-        c.add(bg);
-        frame.setVisible(true);
-        // frame.add(bg);
+        bg.setBounds(0, 0, size.width, size.height);
         
 
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(800, 800);
+        setLayout(null);
+        setTitle("MINESWEEPER");
+        setResizable(false);
+        add(panelJudul);
+        add(panel);
+        Container c = getContentPane();
+        c.add(bg);
+        setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        new MenuStart();
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'mouseClicked'");
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'mousePressed'");
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'mouseReleased'");
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'mouseEntered'");
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'mouseExited'");
     }
 
 }
