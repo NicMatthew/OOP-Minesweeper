@@ -4,6 +4,14 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class MenuStart {
+    public static ImageIcon imageResize(ImageIcon image, int width, int height) {
+        ImageIcon lama = image;
+        Image lama1 = lama.getImage();
+        Image baru1 = lama1.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
+        ImageIcon baru = new ImageIcon(baru1);
+        
+        return baru;
+    }
 
     public static void main(String[] args) {
         JPanel panelJudul = new JPanel();
@@ -12,13 +20,8 @@ public class MenuStart {
         panelJudul.setBackground(new Color(0, 0, 0,0));
         panelJudul.setBounds(0, 200, 780, 100);
         JLabel judul = new JLabel();
-
-        ImageIcon lama = new ImageIcon("Assets/logo.png");
-        Image lama1 = lama.getImage();
-        Image baru1 = lama1.getScaledInstance(700, 90, java.awt.Image.SCALE_SMOOTH);
-        ImageIcon gambarJudul = new ImageIcon(baru1);
-
-        judul.setIcon(gambarJudul);
+        ImageIcon logo = new ImageIcon("Assets/logo.png");
+        judul.setIcon(imageResize(logo, 700, 90));
         // judul.setBounds(0,0,500,100);
         panelJudul.add(judul);
 
@@ -26,13 +29,16 @@ public class MenuStart {
 
         JPanel panel = new JPanel(new GridLayout(2, 1));
         panel.setBounds(0, 350, 780, 300);
-        panel.setBackground(Color.red);
+        panel.setOpaque(false);
+        panel.setBackground(new Color(0, 0, 0,0));
         JLabel start = new JLabel();
-
-        start.setIcon(new ImageIcon("Assets/start.png"));
-        start.setHorizontalAlignment(JLabel.CENTER);
         JLabel quit = new JLabel();
-        quit.setIcon(new ImageIcon("Assets/quit.png"));
+        ImageIcon startImage = new ImageIcon("Assets/start.png");
+        ImageIcon quitImage = new ImageIcon("Assets/quit.png");
+
+        start.setIcon(imageResize(startImage, 300, 150));
+        start.setHorizontalAlignment(JLabel.CENTER);
+        quit.setIcon(imageResize(quitImage, 300, 150));
         quit.setHorizontalAlignment(JLabel.CENTER);
         panel.add(start);
         panel.add(quit);
