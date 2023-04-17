@@ -21,7 +21,7 @@ public class MenuStart extends JFrame implements MouseListener{
         panelJudul.setBackground(new Color(0, 0, 0,0));
         panelJudul.setBounds(0, 200, 780, 100);
         JLabel judul = new JLabel();
-        ImageIcon logo = new ImageIcon("Assets/logo.png");
+        ImageIcon logo = new ImageIcon("Assets/title_text.png");
         judul.setIcon(imageResize(logo, 700, 90));
         // judul.setBounds(0,0,500,100);
         panelJudul.add(judul);
@@ -60,7 +60,7 @@ public class MenuStart extends JFrame implements MouseListener{
         add(panel);
         Container c = getContentPane();
         c.add(bg);
-        setVisible(true);
+        this.setVisible(true);
     }
 
     public static void main(String[] args) {
