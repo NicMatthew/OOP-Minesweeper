@@ -4,7 +4,8 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class MenuStart extends JFrame implements MouseListener{
+public class MenuStart extends JFrame implements MouseListener {
+    
     public static ImageIcon imageResize(ImageIcon image, int width, int height) {
         ImageIcon lama = image;
         Image lama1 = lama.getImage();
@@ -13,10 +14,16 @@ public class MenuStart extends JFrame implements MouseListener{
 
         return baru;
     }
-    JLabel start = new JLabel();
-    JLabel quit = new JLabel();
+    JLabel start;
+    JLabel quit;
+    ImageIcon startImage = new ImageIcon("Assets/start.png");
+    ImageIcon quitImage = new ImageIcon("Assets/quit.png");
+    ImageIcon startImageHover = new ImageIcon("Assets/start_hover.png");
+    ImageIcon quitImageHover = new ImageIcon("Assets/quit_hover.png");
 
     public MenuStart() {
+        start = new JLabel();
+        quit = new JLabel();
         JPanel panelJudul = new JPanel();
         // panelJudul.setBackground(Color.red);
         panelJudul.setOpaque(false);
@@ -24,29 +31,28 @@ public class MenuStart extends JFrame implements MouseListener{
         panelJudul.setBounds(0, 200, 780, 100);
         JLabel judul = new JLabel();
         ImageIcon logo = new ImageIcon("Assets/title_text.png");
-        judul.setIcon(imageResize(logo, 700, 90));
+        judul.setIcon(imageResize(logo, 700, 120));
         // judul.setBounds(0,0,500,100);
         panelJudul.add(judul);
 
 
 
         JPanel panel = new JPanel(new GridLayout(2, 1));
-        panel.setBounds(0, 350, 780, 300);
+        panel.setBounds(250, 350, 300, 300);
         panel.setOpaque(false);
         panel.setBackground(new Color(0, 0, 0,0));
+        // panel.setBackground(Color.red);
         
-        ImageIcon startImage = new ImageIcon("Assets/start.png");
-        ImageIcon quitImage = new ImageIcon("Assets/quit.png");
-        ImageIcon startImageHover = new ImageIcon("Assets/start_hover.png");
-        ImageIcon quitImageHover = new ImageIcon("Assets/quit_hover.png");
+        
 
-        start.setIcon(imageResize(startImage, 300, 150));
+        start.setIcon(imageResize(startImage, 300, 120));
         start.setHorizontalAlignment(JLabel.CENTER);
-        quit.setIcon(imageResize(quitImage, 300, 150));
+        quit.setIcon(imageResize(quitImage, 300, 120));
         quit.setHorizontalAlignment(JLabel.CENTER);
         panel.add(start);
         panel.add(quit);
         start.addMouseListener(this);
+        quit.addMouseListener(this);
         JLabel bg = new JLabel();
         bg.setIcon(new ImageIcon("Assets/background.png"));
         Dimension size = bg.getPreferredSize();
@@ -74,6 +80,13 @@ public class MenuStart extends JFrame implements MouseListener{
     public void mouseClicked(MouseEvent e) {
         // TODO Auto-generated method stub
         // throw new UnsupportedOperationException("Unimplemented method 'mouseClicked'");
+        if (e.getSource() == quit) {
+            dispose();
+        }
+        if (e.getSource() == start) {
+            dispose();
+            new Main();
+        }
     }
 
     @Override
@@ -91,6 +104,13 @@ public class MenuStart extends JFrame implements MouseListener{
     @Override
     public void mouseEntered(MouseEvent e) {
         // TODO Auto-generated method stub
+        if (e.getSource() == start) {
+            start.setIcon(imageResize(startImageHover, 300, 120));
+        }
+        if (e.getSource() == quit) {
+            quit.setIcon(imageResize(quitImageHover, 300, 120));
+        }
+
         
         // throw new UnsupportedOperationException("Unimplemented method 'mouseEntered'");
     }
@@ -98,6 +118,12 @@ public class MenuStart extends JFrame implements MouseListener{
     @Override
     public void mouseExited(MouseEvent e) {
         // TODO Auto-generated method stub
+        if (e.getSource() == start) {
+            start.setIcon(imageResize(startImage, 300, 120));
+        }
+        if (e.getSource() == quit) {
+            quit.setIcon(imageResize(quitImage, 300, 120));
+        }
         // throw new UnsupportedOperationException("Unimplemented method 'mouseExited'");
     }
 
