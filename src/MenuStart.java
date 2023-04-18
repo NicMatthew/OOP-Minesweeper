@@ -16,6 +16,8 @@ public class MenuStart extends JFrame implements MouseListener {
     }
     JLabel start;
     JLabel quit;
+    JLabel history;
+    ImageIcon historyImage = new ImageIcon("Assets/historyLogo.png");
     ImageIcon startImage = new ImageIcon("Assets/start.png");
     ImageIcon quitImage = new ImageIcon("Assets/quit.png");
     ImageIcon startImageHover = new ImageIcon("Assets/start_hover.png");
@@ -24,7 +26,17 @@ public class MenuStart extends JFrame implements MouseListener {
     public MenuStart() {
         start = new JLabel();
         quit = new JLabel();
+        history = new JLabel();
         JPanel panelJudul = new JPanel();
+        JPanel panelHistory = new JPanel();
+        panelHistory.setOpaque(false);
+        panelHistory.setBackground(new Color(0, 0, 0, 0));
+        // panelHistory.setBackground(Color.red);
+        panelHistory.setBounds(680, 650, 100, 100);
+        history.setIcon(imageResize(historyImage, 100, 100));
+        history.addMouseListener(this);
+        // history.setBounds(0, 0, 100, 100);
+        panelHistory.add(history);
         // panelJudul.setBackground(Color.red);
         panelJudul.setOpaque(false);
         panelJudul.setBackground(new Color(0, 0, 0,0));
@@ -67,6 +79,7 @@ public class MenuStart extends JFrame implements MouseListener {
         setResizable(false);
         add(panelJudul);
         add(panel);
+        add(panelHistory);
         Container c = getContentPane();
         c.add(bg);
         this.setVisible(true);
@@ -86,6 +99,10 @@ public class MenuStart extends JFrame implements MouseListener {
         if (e.getSource() == start) {
             dispose();
             new Main();
+        }
+        if (e.getSource() == history) {
+            dispose();
+            new historyScore();
         }
     }
 

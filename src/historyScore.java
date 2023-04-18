@@ -43,8 +43,4 @@ public class historyScore extends JFrame {
 
     }
 
-    public static void main(String[] args) {
-        historyScore = new historyScore();
-    }
-
 }
