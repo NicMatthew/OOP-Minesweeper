@@ -1,4 +1,5 @@
 public class Mines {
+<<<<<<< Updated upstream
     int x,y;
 
     public Mines(int x, int y) {
@@ -15,3 +16,15 @@ public class Mines {
     }
     
 }
+=======
+    private int posX;
+    private int posY;
+    public Mines(int posX, int posY) {
+        this.posX = posX;
+        this.posY = posY;
+    }
+    
+
+}
+
+>>>>>>> Stashed changes

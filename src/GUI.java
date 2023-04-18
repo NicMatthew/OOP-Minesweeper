@@ -13,18 +13,25 @@ import java.util.Random;
 import javax.swing.JPanel;
 // /testtttttt
 import java.util.ArrayList;
+import java.util.Random;
 
 public class GUI extends JFrame {
     int spacing = 5;
     int boxWidth = 80;
     Random random = new Random();
+<<<<<<< Updated upstream
     int count_mines = 16;
+=======
+>>>>>>> Stashed changes
     int mx = -100;
     int my = -100;
     ArrayList<Integer> cx = new ArrayList<>();
     ArrayList<Integer> cy = new ArrayList<>();
     ArrayList<Mines> mines = new ArrayList<>();
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
     public GUI() {
         while (mines.size() < 16) {
             int ti = random.nextInt(17);
@@ -139,4 +146,10 @@ public class GUI extends JFrame {
 
         }
     }
+    public Mines randomMines(){
+        Mines tMines = new Mines(random.nextInt(17),random.nextInt(10));
+        return tMines;
+    }
+
+    
 }

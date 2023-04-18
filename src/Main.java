@@ -5,7 +5,7 @@ public class Main implements Runnable {
 
         System.out.println("testtttt methewwww");
         new Thread(new Main()).start();
-
+        
     }
 
     @Override
