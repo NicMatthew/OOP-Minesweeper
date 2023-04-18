@@ -26,7 +26,7 @@ public class GUI extends JFrame {
     ArrayList<Integer> cy = new ArrayList<>();
     ArrayList<Mines> mines = new ArrayList<>();
     public GUI() {
-        while (mines.size() < 16) {
+        while (mines.size() != 16) {
             int ti = random.nextInt(17);
             int tj = random.nextInt(10);
             boolean cek = false;
@@ -34,14 +34,16 @@ public class GUI extends JFrame {
             for (Mines tmines : mines) {
                 if (ti == tmines.getX() && tj == tmines.getY()) {
                     cek = true;
-                    break;
+                    // break;
                 }
             }
             if (cek == true) {
                 continue;
+            }else{
+                Mines temp_mine = new Mines(ti, tj);
+                mines.add(temp_mine);
             }
-            Mines temp_mine = new Mines(ti, tj);
-            mines.add(temp_mine);
+            
         }
         this.setTitle("mineswepper");
         this.setSize(1295, 838);
