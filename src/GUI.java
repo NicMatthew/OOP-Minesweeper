@@ -13,7 +13,6 @@ import java.util.Random;
 import javax.swing.JPanel;
 // /testtttttt
 import java.util.ArrayList;
-import java.util.Random;
 
 public class GUI extends JFrame {
     int spacing = 5;
@@ -25,7 +24,9 @@ public class GUI extends JFrame {
     ArrayList<Integer> cx = new ArrayList<>();
     ArrayList<Integer> cy = new ArrayList<>();
     ArrayList<Mines> mines = new ArrayList<>();
+
     public GUI() {
+<<<<<<< Updated upstream
         while (mines.size() != 16) {
             int ti = random.nextInt(17);
             int tj = random.nextInt(10);
@@ -44,6 +45,17 @@ public class GUI extends JFrame {
                 mines.add(temp_mine);
             }
             
+=======
+        while (mines.size() < 16) {
+            int ti = random.nextInt(16);
+            int tj = random.nextInt(9);
+            for (int i = 0; i < mines.size(); i++) {
+                if (mines.get(i).getX() == ti && mines.get(i).getY() == tj) {
+                    mines.remove(i);
+                }
+            }
+            mines.add(new Mines(ti, tj));
+>>>>>>> Stashed changes
         }
         this.setTitle("mineswepper");
         this.setSize(1295, 838);
@@ -65,12 +77,8 @@ public class GUI extends JFrame {
             for (int i = 0; i < 16; i++) {
                 for (int j = 0; j < 9; j++) {
                     for (int j2 = 0; j2 < cx.size(); j2++) {
-                        if ((cx.get(j2) >= 8 + spacing + i * boxWidth)
-                                && (cx.get(j2) <= 8 + spacing + i * boxWidth + boxWidth - 2 * spacing)) {
-                            if ((cy.get(j2) >= 110 + spacing + j * boxWidth)
-                                    && (cy.get(j2) <= 110 + spacing + j * boxWidth + boxWidth - 2 * spacing)) {
-                                g.setColor(Color.blue);
-                            }
+                        if (cx.get(j2) == i && cy.get(j2) == j) {
+                            g.setColor(Color.blue);
                         }
                     }
                     if ((mx >= 8 + spacing + i * boxWidth)
@@ -94,6 +102,81 @@ public class GUI extends JFrame {
         }
     }
 
+    public boolean cekmines(int x, int y) {
+        for (Mines tmine : mines) {
+            if (tmine.getX() == x && tmine.getY() == y) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void recursiveClick(int x, int y, int Ox, int Oy) {
+        if (x < 0 || y < 0 || x > 15 || y > 8) {
+            return;
+        }
+        cx.add(x);
+        cy.add(y);
+        if (cekmines(x - 1, y - 1) && cekmines(x - 1, y) && cekmines(x - 1, y + 1)) {
+            if (cekmines(x, y - 1) && cekmines(x, y) && cekmines(x, y + 1)) {
+                if (cekmines(x + 1, y - 1) && cekmines(x + 1, y) && cekmines(x + 1, y + 1)) {
+
+                } else
+                    return;
+            } else
+                return;
+        } else
+            return;
+
+        if (x - 1 != Ox && y - 1 != Oy) {
+            recursiveClick(x - 1, y - 1, x, y);
+        }
+        if (x != Ox && y - 1 != Oy) {
+            recursiveClick(x, y - 1, x, y);
+        }
+        if (x + 1 != Ox && y - 1 != Oy) {
+            recursiveClick(x + 1, y - 1, x, y);
+        }
+
+        if (x - 1 != Ox && y + 1 != Oy) {
+            recursiveClick(x - 1, y + 1, x, y);
+        }
+        if (x != Ox && y + 1 != Oy) {
+            recursiveClick(x, y + 1, x, y);
+        }
+        if (x + 1 != Ox && y + 1 != Oy) {
+            recursiveClick(x + 1, y + 1, x, y);
+        }
+
+        if (x - 1 != Ox && y != Oy) {
+            recursiveClick(x - 1, y + 1, x, y);
+        }
+        if (x + 1 != Ox && y != Oy) {
+            recursiveClick(x + 1, y + 1, x, y);
+        }
+
+    }
+
+    public int getindex_X(int cek_X) {
+        for (int i = 0; i < 16; i++) {
+            if ((cek_X >= 8 + spacing + i * boxWidth) &&
+                    (cek_X <= 8 + spacing + i * boxWidth + boxWidth - 2 * spacing)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public int getindex_Y(int cek_Y) {
+        for (int j = 0; j < 9; j++) {
+            if ((cek_Y >= 110 + spacing + j * boxWidth)
+                    && (cek_Y <= 110 + spacing + j * boxWidth + boxWidth - 2 * spacing)) {
+                return j;
+            }
+        }
+        return -1;
+    }
+
     public class Move implements MouseMotionListener {
 
         @Override
@@ -115,9 +198,10 @@ public class GUI extends JFrame {
         @Override
         public void mouseClicked(MouseEvent e) {
             System.out.println("Clicked");
-            cx.add(e.getX());
-            cy.add(e.getY());
-
+            int x = getindex_X(e.getX());
+            int y = getindex_X(e.getY())-1;
+            System.out.println(x + " " + y);
+            recursiveClick(x, y, x, y);
             // System.out.println("X : " + cx + " Y : " + cy);
         }
 
@@ -141,10 +225,10 @@ public class GUI extends JFrame {
 
         }
     }
-    public Mines randomMines(){
-        Mines tMines = new Mines(random.nextInt(17),random.nextInt(10));
+
+    public Mines randomMines() {
+        Mines tMines = new Mines(random.nextInt(17), random.nextInt(10));
         return tMines;
     }
 
-    
 }

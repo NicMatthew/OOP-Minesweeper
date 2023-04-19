@@ -3,7 +3,7 @@ public class Main implements Runnable {
 
     public static void main(String[] args) {
 
-        System.out.println("testtttt methewwww");
+        // System.out.println("testtttt methewwww");
         new Thread(new Main()).start();
         
     }
