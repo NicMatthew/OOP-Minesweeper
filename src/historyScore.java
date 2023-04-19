@@ -32,7 +32,7 @@ public class historyScore extends JFrame {
         setLayout(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800,800);
-        setTitle("Score History");
+        setTitle("Minesweeper/Score History");
         setResizable(false);
         setVisible(true);
 
