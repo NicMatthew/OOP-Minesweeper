@@ -26,26 +26,6 @@ public class GUI extends JFrame {
     ArrayList<Mines> mines = new ArrayList<>();
 
     public GUI() {
-<<<<<<< Updated upstream
-        while (mines.size() != 16) {
-            int ti = random.nextInt(17);
-            int tj = random.nextInt(10);
-            boolean cek = false;
-
-            for (Mines tmines : mines) {
-                if (ti == tmines.getX() && tj == tmines.getY()) {
-                    cek = true;
-                    // break;
-                }
-            }
-            if (cek == true) {
-                continue;
-            }else{
-                Mines temp_mine = new Mines(ti, tj);
-                mines.add(temp_mine);
-            }
-            
-=======
         while (mines.size() < 16) {
             int ti = random.nextInt(16);
             int tj = random.nextInt(9);
@@ -55,7 +35,6 @@ public class GUI extends JFrame {
                 }
             }
             mines.add(new Mines(ti, tj));
->>>>>>> Stashed changes
         }
         this.setTitle("mineswepper");
         this.setSize(1295, 838);
@@ -103,6 +82,8 @@ public class GUI extends JFrame {
     }
 
     public boolean cekmines(int x, int y) {
+        if (x <= -1 || y <= -1)
+            return true;
         for (Mines tmine : mines) {
             if (tmine.getX() == x && tmine.getY() == y) {
                 return false;
@@ -110,17 +91,40 @@ public class GUI extends JFrame {
         }
         return true;
     }
-
+    public boolean cekclicked(int a,int b){
+        for (int i = 0; i < cx.size(); i++) {
+            if(a == cx.get(i) && b == cy.get(i)){
+                return false;
+            }
+        }
+        return true;
+    }
     public void recursiveClick(int x, int y, int Ox, int Oy) {
         if (x < 0 || y < 0 || x > 15 || y > 8) {
             return;
         }
-        cx.add(x);
-        cy.add(y);
+        
+        if(!cekmines(x, y)){
+            System.exit(0);
+        }
+        if(!cekclicked(x, y))return;
+                    cx.add(x);
+                    cy.add(y);  
         if (cekmines(x - 1, y - 1) && cekmines(x - 1, y) && cekmines(x - 1, y + 1)) {
-            if (cekmines(x, y - 1) && cekmines(x, y) && cekmines(x, y + 1)) {
+            if (cekmines(x, y - 1) && cekmines(x, y + 1)) {
                 if (cekmines(x + 1, y - 1) && cekmines(x + 1, y) && cekmines(x + 1, y + 1)) {
+                    
 
+                    recursiveClick(x - 1, y - 1, x, y);
+                    recursiveClick(x, y - 1, x, y);
+                    recursiveClick(x + 1, y - 1, x, y);
+
+                    recursiveClick(x - 1, y + 1, x, y);
+                    recursiveClick(x, y + 1, x, y);
+                    recursiveClick(x + 1, y + 1, x, y);
+
+                    recursiveClick(x - 1, y, x, y);
+                    recursiveClick(x + 1, y, x, y);
                 } else
                     return;
             } else
@@ -128,32 +132,32 @@ public class GUI extends JFrame {
         } else
             return;
 
-        if (x - 1 != Ox && y - 1 != Oy) {
-            recursiveClick(x - 1, y - 1, x, y);
-        }
-        if (x != Ox && y - 1 != Oy) {
-            recursiveClick(x, y - 1, x, y);
-        }
-        if (x + 1 != Ox && y - 1 != Oy) {
-            recursiveClick(x + 1, y - 1, x, y);
-        }
+        // if (x - 1 != Ox && y - 1 != Oy) {
+        // recursiveClick(x - 1, y - 1, x, y);
+        // }
+        // if (x != Ox && y - 1 != Oy) {
+        // recursiveClick(x, y - 1, x, y);
+        // }
+        // if (x + 1 != Ox && y - 1 != Oy) {
+        // recursiveClick(x + 1, y - 1, x, y);
+        // }
 
-        if (x - 1 != Ox && y + 1 != Oy) {
-            recursiveClick(x - 1, y + 1, x, y);
-        }
-        if (x != Ox && y + 1 != Oy) {
-            recursiveClick(x, y + 1, x, y);
-        }
-        if (x + 1 != Ox && y + 1 != Oy) {
-            recursiveClick(x + 1, y + 1, x, y);
-        }
+        // if (x - 1 != Ox && y + 1 != Oy) {
+        // recursiveClick(x - 1, y + 1, x, y);
+        // }
+        // if (x != Ox && y + 1 != Oy) {
+        // recursiveClick(x, y + 1, x, y);
+        // }
+        // if (x + 1 != Ox && y + 1 != Oy) {
+        // recursiveClick(x + 1, y + 1, x, y);
+        // }
 
-        if (x - 1 != Ox && y != Oy) {
-            recursiveClick(x - 1, y + 1, x, y);
-        }
-        if (x + 1 != Ox && y != Oy) {
-            recursiveClick(x + 1, y + 1, x, y);
-        }
+        // if (x - 1 != Ox && y != Oy) {
+        // recursiveClick(x - 1, y, x, y);
+        // }
+        // if (x + 1 != Ox && y != Oy) {
+        // recursiveClick(x + 1, y, x, y);
+        // }
 
     }
 
@@ -171,6 +175,7 @@ public class GUI extends JFrame {
         for (int j = 0; j < 9; j++) {
             if ((cek_Y >= 110 + spacing + j * boxWidth)
                     && (cek_Y <= 110 + spacing + j * boxWidth + boxWidth - 2 * spacing)) {
+
                 return j;
             }
         }
@@ -178,6 +183,7 @@ public class GUI extends JFrame {
     }
 
     public class Move implements MouseMotionListener {
+
 
         @Override
         public void mouseDragged(MouseEvent e) {
@@ -199,9 +205,14 @@ public class GUI extends JFrame {
         public void mouseClicked(MouseEvent e) {
             System.out.println("Clicked");
             int x = getindex_X(e.getX());
-            int y = getindex_X(e.getY())-1;
+            int y = getindex_Y(e.getY());
             System.out.println(x + " " + y);
-            recursiveClick(x, y, x, y);
+            if (x != -1 || y != -1) {
+                recursiveClick(x, y, x, y);
+            }
+            // for (int i = 0; i < mines.size(); i++) {
+            //     System.out.println(mines.get(i).getX() + "  " + mines.get(i).getY());
+            // }
             // System.out.println("X : " + cx + " Y : " + cy);
         }
 
