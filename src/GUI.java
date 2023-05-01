@@ -70,6 +70,7 @@ public class GUI extends JFrame {
                 }
             }
         }
+
         this.setTitle("mineswepper");
         this.setSize(1295, 838);
         this.setDefaultCloseOperation(3);
@@ -119,7 +120,7 @@ public class GUI extends JFrame {
 
                         }
                     }
-//                    =============================Developer mode==========================================
+////                    =============================Developer mode==========================================
 //                    for (Mines tMines : mines) {
 //                        if (i == tMines.getX() && j == tMines.getY()) {
 //                            g.setColor(Color.yellow);
@@ -243,17 +244,18 @@ public class GUI extends JFrame {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            System.out.println("Clicked");
-            int x = getindex_X(e.getX());
-            int y = getindex_Y(e.getY());
-            System.out.println(x + " " + y);
-            if (x != -1 || y != -1) {
-                recursiveClick(x, y, x, y);
+            if(e.getButton()==1){
+                System.out.println("Clicked");
+                int x = getindex_X(e.getX());
+                int y = getindex_Y(e.getY());
+                System.out.println(x + " " + y);
+                if (x != -1 || y != -1) {
+                    recursiveClick(x, y, x, y);
+                }
             }
-            // for (int i = 0; i < mines.size(); i++) {
-            //     System.out.println(mines.get(i).getX() + "  " + mines.get(i).getY());
-            // }
-            // System.out.println("X : " + cx + " Y : " + cy);
+            if(e.getButton()==3){
+                System.out.println("klik kanan");
+            }
         }
 
         @Override

@@ -1,10 +1,16 @@
 public class Main implements Runnable {
-    GUI gui = new GUI(10);
+    int bom;
+    GUI gui;
+
+    public Main(int mine){
+        gui = new GUI(mine);
+    }
 
     public static void main(String[] args) {
+//        new MenuStart();
 
         // System.out.println("testtttt methewwww");
-        new Thread(new Main()).start();
+//        new Thread(new Main()).start();
         
     }
 

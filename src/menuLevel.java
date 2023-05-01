@@ -94,15 +94,16 @@ public class menuLevel extends JFrame implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         if (e.getSource()==easy){
             dispose();
-            new Main();
-
+            new Thread(new Main(15)).start();
         }
         if (e.getSource()==medium){
             dispose();
+            new Thread(new Main(25)).start();
 
         }
         if (e.getSource()==hard){
             dispose();
+            new Thread(new Main(35)).start();
 
         }
         // TODO Auto-generated method stub
