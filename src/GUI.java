@@ -34,7 +34,7 @@ public class GUI extends JFrame {
 //            var path = "Assets/Boxes/"+i+".png";
 //            images.add(new ImageIcon(path).getImage());
 //        }
-        images.add(new ImageIcon("src/Assets/Boxes/box_hoverpng").getImage());
+        images.add(new ImageIcon("src/Assets/Boxes/box.png").getImage());
         images.add(new ImageIcon("src/Assets/Boxes/1.png").getImage());
         images.add(new ImageIcon("src/Assets/Boxes/2.png").getImage());
         images.add(new ImageIcon("src/Assets/Boxes/3.png").getImage());
