@@ -34,7 +34,7 @@ public class GUI extends JFrame {
 //            var path = "Assets/Boxes/"+i+".png";
 //            images.add(new ImageIcon(path).getImage());
 //        }
-        images.add(new ImageIcon("src/Assets/Boxes/box.png").getImage());
+        images.add(new ImageIcon("src/Assets/Boxes/nol.png").getImage());
         images.add(new ImageIcon("src/Assets/Boxes/1.png").getImage());
         images.add(new ImageIcon("src/Assets/Boxes/2.png").getImage());
         images.add(new ImageIcon("src/Assets/Boxes/3.png").getImage());
@@ -115,7 +115,8 @@ public class GUI extends JFrame {
                             && (mx <= 8 + spacing + i * boxWidth + boxWidth - 2 * spacing)) {
                         if ((my >= 110 + spacing + j * boxWidth)
                                 && (my <= 110 + spacing + j * boxWidth + boxWidth - 2 * spacing)) {
-                            g.setColor(Color.red);
+                            g2D.drawImage(new ImageIcon("src/Assets/Boxes/box_hover.png").getImage(),spacing + i * boxWidth,spacing + j * boxWidth + boxWidth,boxWidth - 2 * spacing,boxWidth - 2 * spacing,null);
+
                         }
                     }
 //                    =============================Developer mode==========================================
@@ -124,10 +125,10 @@ public class GUI extends JFrame {
 //                            g.setColor(Color.yellow);
 //                        }
 //                    }
-
-                    g.fillRect(spacing + i * boxWidth, spacing + j * boxWidth + boxWidth, boxWidth - 2 * spacing,
-                            boxWidth - 2 * spacing);
-                    g.setColor(Color.gray);
+                    g2D.drawImage(new ImageIcon("src/Assets/Boxes/box.png").getImage(),spacing + i * boxWidth,spacing + j * boxWidth + boxWidth,boxWidth - 2 * spacing,boxWidth - 2 * spacing,null);
+//                    g.fillRect(spacing + i * boxWidth, spacing + j * boxWidth + boxWidth, boxWidth - 2 * spacing,
+//                            boxWidth - 2 * spacing);
+//                    g.setColor(Color.gray);
                 }
             }
         }
