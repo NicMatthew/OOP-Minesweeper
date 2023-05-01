@@ -4,10 +4,13 @@ public class boxes{
         this.x = x;
         this.y = y;
     }
-    public int getX(){
-        return this.x;
+
+    public int getX() {
+        return x;
     }
-    public int getX(){
-        return this.y;
+
+    public int getY() {
+        return y;
     }
+
 }

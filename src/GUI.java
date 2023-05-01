@@ -14,6 +14,8 @@ import javax.swing.JPanel;
 // /testtttttt
 import java.util.ArrayList;
 
+import static jdk.internal.org.objectweb.asm.Opcodes.NULL;
+
 public class GUI extends JFrame {
     int spacing = 5;
     int boxWidth = 80;
@@ -21,11 +23,30 @@ public class GUI extends JFrame {
     // int count_mines = 16;
     int mx = -100;
     int my = -100;
-    ArrayList<Integer> cx = new ArrayList<>();/
+    ArrayList<Integer> cx = new ArrayList<>();
     ArrayList<Integer> cy = new ArrayList<>();
     ArrayList<Mines> mines = new ArrayList<>();
+    ArrayList<safebox> safeBox = new ArrayList<>();
+    ArrayList<Image> images = new ArrayList<>();
 
     public GUI(int mine) {
+//        for (int i = 1; i < 9; i++) {
+//            var path = "Assets/Boxes/"+i+".png";
+//            images.add(new ImageIcon(path).getImage());
+//        }
+        images.add(new ImageIcon("src/Assets/Boxes/flag.png").getImage());
+        images.add(new ImageIcon("src/Assets/Boxes/1.png").getImage());
+        images.add(new ImageIcon("src/Assets/Boxes/2.png").getImage());
+        images.add(new ImageIcon("src/Assets/Boxes/3.png").getImage());
+        images.add(new ImageIcon("src/Assets/Boxes/4.png").getImage());
+        images.add(new ImageIcon("src/Assets/Boxes/5.png").getImage());
+        images.add(new ImageIcon("src/Assets/Boxes/6.png").getImage());
+        images.add(new ImageIcon("src/Assets/Boxes/7.png").getImage());
+        images.add(new ImageIcon("src/Assets/Boxes/8.png").getImage());
+
+
+
+
         while (mines.size() < mine) {
             int ti = random.nextInt(16);
             int tj = random.nextInt(9);
@@ -35,6 +56,19 @@ public class GUI extends JFrame {
                 }
             }
             mines.add(new Mines(ti, tj));
+        }
+        for (int i = 0; i < 16; i++) {
+            for (int j = 0; j < 9; j++) {
+                boolean cek = true;
+                for (Mines tmine: mines) {
+                    if(i == tmine.getX() && j == tmine.getY()){
+                        cek =false;
+                    }
+                }
+                if(cek ==true){
+                    safeBox.add(new safebox(i,j,cekAroundMines(i,j)));
+                }
+            }
         }
         this.setTitle("mineswepper");
         this.setSize(1295, 838);
@@ -47,19 +81,34 @@ public class GUI extends JFrame {
         CLick click = new CLick();
         this.addMouseListener(click);
     }
+    public int getIndexSafeBox(int x , int y){
+        for (int i = 0; i < safeBox.size(); i++) {
+            if(x == safeBox.get(i).getX() && y == safeBox.get(i).getY())return i;
+        }
+        return -1;
+    }
 
     public class Board extends JPanel {
         public void paintComponent(Graphics g) {
+            Graphics2D g2D = (Graphics2D) g;
             g.setColor(Color.darkGray);
             g.fillRect(0, 0, 1280, 800);
             g.setColor(Color.gray);
             for (int i = 0; i < 16; i++) {
                 for (int j = 0; j < 9; j++) {
+                    boolean cekdraw = false;
                     for (int j2 = 0; j2 < cx.size(); j2++) {
                         if (cx.get(j2) == i && cy.get(j2) == j) {
-                            g.setColor(Color.blue);
+//                            g.setColor(Color.blue);
+                            g2D.drawImage(images.get(safeBox.get(getIndexSafeBox(i,j)).getMineAround()),spacing + i * boxWidth, spacing + j * boxWidth + boxWidth, boxWidth - 2 * spacing,
+                                    boxWidth - 2 * spacing,null);
+                            g.setColor(Color.gray);
+                            cekdraw =true;
+                            break;
+
                         }
                     }
+                    if(cekdraw == true)continue;;
                     if ((mx >= 8 + spacing + i * boxWidth)
                             && (mx <= 8 + spacing + i * boxWidth + boxWidth - 2 * spacing)) {
                         if ((my >= 110 + spacing + j * boxWidth)
@@ -80,10 +129,8 @@ public class GUI extends JFrame {
             }
         }
     }
-
     public boolean cekmines(int x, int y) {
-        if (x <= -1 || y <= -1)
-            return true;
+        if (x <= -1 || y <= -1) return true;
         for (Mines tmine : mines) {
             if (tmine.getX() == x && tmine.getY() == y) {
                 return false;
@@ -91,6 +138,21 @@ public class GUI extends JFrame {
         }
         return true;
     }
+    public int cekAroundMines(int x, int y) {
+        int count = 0;
+        if (!cekmines(x,y-1))count++;
+        if (!cekmines(x,y+1))count++;
+
+        if (!cekmines(x-1,y-1))count++;
+        if (!cekmines(x-1,y))count++;
+        if (!cekmines(x-1,y+1))count++;
+
+        if (!cekmines(x+1,y-1))count++;
+        if (!cekmines(x+1,y))count++;
+        if (!cekmines(x+1,y+1))count++;
+        return count;
+    }
+
     public boolean cekclicked(int a,int b){
         for (int i = 0; i < cx.size(); i++) {
             if(a == cx.get(i) && b == cy.get(i)){
@@ -132,32 +194,6 @@ public class GUI extends JFrame {
         } else
             return;
 
-        // if (x - 1 != Ox && y - 1 != Oy) {
-        // recursiveClick(x - 1, y - 1, x, y);
-        // }
-        // if (x != Ox && y - 1 != Oy) {
-        // recursiveClick(x, y - 1, x, y);
-        // }
-        // if (x + 1 != Ox && y - 1 != Oy) {
-        // recursiveClick(x + 1, y - 1, x, y);
-        // }
-
-        // if (x - 1 != Ox && y + 1 != Oy) {
-        // recursiveClick(x - 1, y + 1, x, y);
-        // }
-        // if (x != Ox && y + 1 != Oy) {
-        // recursiveClick(x, y + 1, x, y);
-        // }
-        // if (x + 1 != Ox && y + 1 != Oy) {
-        // recursiveClick(x + 1, y + 1, x, y);
-        // }
-
-        // if (x - 1 != Ox && y != Oy) {
-        // recursiveClick(x - 1, y, x, y);
-        // }
-        // if (x + 1 != Ox && y != Oy) {
-        // recursiveClick(x + 1, y, x, y);
-        // }
 
     }
 
@@ -237,9 +273,5 @@ public class GUI extends JFrame {
         }
     }
 
-    public Mines randomMines() {
-        Mines tMines = new Mines(random.nextInt(17), random.nextInt(10));
-        return tMines;
-    }
 
 }

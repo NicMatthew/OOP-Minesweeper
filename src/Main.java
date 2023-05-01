@@ -1,5 +1,5 @@
 public class Main implements Runnable {
-    GUI gui = new GUI(50);
+    GUI gui = new GUI(90);
 
     public static void main(String[] args) {
 
