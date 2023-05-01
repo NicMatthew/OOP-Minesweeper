@@ -28,8 +28,11 @@ public class GUI extends JFrame {
     ArrayList<Mines> mines = new ArrayList<>();
     ArrayList<safebox> safeBox = new ArrayList<>();
     ArrayList<Image> images = new ArrayList<>();
+    ArrayList<boxes> flags = new ArrayList<>();
+    private int mine;
 
     public GUI(int mine) {
+        this.mine = mine;
 //        for (int i = 1; i < 9; i++) {
 //            var path = "Assets/Boxes/"+i+".png";
 //            images.add(new ImageIcon(path).getImage());
@@ -111,7 +114,9 @@ public class GUI extends JFrame {
 
                         }
                     }
-                    if(cekdraw == true)continue;;
+                    if(cekdraw == true){continue;
+                    }
+
                     if ((mx >= 8 + spacing + i * boxWidth)
                             && (mx <= 8 + spacing + i * boxWidth + boxWidth - 2 * spacing)) {
                         if ((my >= 110 + spacing + j * boxWidth)
@@ -119,6 +124,14 @@ public class GUI extends JFrame {
                             g2D.drawImage(new ImageIcon("src/Assets/Boxes/box_hover.png").getImage(),spacing + i * boxWidth,spacing + j * boxWidth + boxWidth,boxWidth - 2 * spacing,boxWidth - 2 * spacing,null);
 
                         }
+                    }
+                    for (int k = 0; k < flags.size(); k++) {
+                        if (flags.get(k).getX() == i && flags.get(k).getY() == j) {
+                            cekdraw = true;
+                            g2D.drawImage(new ImageIcon("src/Assets/Boxes/flag.png").getImage(),spacing + i * boxWidth,spacing + j * boxWidth + boxWidth,boxWidth - 2 * spacing,boxWidth - 2 * spacing,null);
+                        }
+                    }
+                    if(cekdraw == true){continue;
                     }
 ////                    =============================Developer mode==========================================
 //                    for (Mines tMines : mines) {
@@ -176,7 +189,15 @@ public class GUI extends JFrame {
         }
         if(!cekclicked(x, y))return;
                     cx.add(x);
-                    cy.add(y);  
+                    cy.add(y);
+                    if(isFlag(x,y)){
+                        for (int i = 0; i < flags.size(); i++) {
+                            if(x == flags.get(i).getX() && y == flags.get(i).getY()){
+                                flags.remove(i);
+                                break;
+                            }
+                        }
+                    }
         if (cekmines(x - 1, y - 1) && cekmines(x - 1, y) && cekmines(x - 1, y + 1)) {
             if (cekmines(x, y - 1) && cekmines(x, y + 1)) {
                 if (cekmines(x + 1, y - 1) && cekmines(x + 1, y) && cekmines(x + 1, y + 1)) {
@@ -239,6 +260,12 @@ public class GUI extends JFrame {
             // System.out.println("X : " + mx + " Y : " + my);
         }
     }
+    public boolean isFlag(int x,int y){
+        for (int i = 0; i < flags.size(); i++) {
+            if(x == flags.get(i).getX() && y == flags.get(i).getY())return true;
+        }
+        return false;
+    }
 
     public class CLick implements MouseListener {
 
@@ -248,13 +275,27 @@ public class GUI extends JFrame {
                 System.out.println("Clicked");
                 int x = getindex_X(e.getX());
                 int y = getindex_Y(e.getY());
-                System.out.println(x + " " + y);
-                if (x != -1 || y != -1) {
+
+                System.out.println("flag : "+ flags.size());
+                if ((x != -1 && y != -1) && !isFlag(x,y)) {
                     recursiveClick(x, y, x, y);
                 }
             }
             if(e.getButton()==3){
-                System.out.println("klik kanan");
+//                System.out.println("klik kanan");
+                int x = getindex_X(e.getX());
+                int y = getindex_Y(e.getY());
+                boolean cekk = false;
+                for (int i = 0; i < flags.size(); i++) {
+                    if(x == flags.get(i).getX() && y == flags.get(i).getY()) {
+                        cekk = true;
+                        flags.remove(i);
+                        break;
+                    }
+                }
+                if (x != -1 && y != -1 && cekk == false && cekclicked(x,y) && flags.size() <= mine){
+                    flags.add(new boxes(x,y));
+                }
             }
         }
 
