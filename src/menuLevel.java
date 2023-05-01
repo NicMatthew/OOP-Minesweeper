@@ -18,13 +18,13 @@ public class menuLevel extends JFrame implements MouseListener {
     JLabel easy;
     JLabel medium;
     JLabel hard;
-    ImageIcon easyImg = new ImageIcon("Assets/easy.png");
-    ImageIcon mediumImg = new ImageIcon("Assets/medium.png");
-    ImageIcon hardImg = new ImageIcon("Assets/hard.png");
+    ImageIcon easyImg = new ImageIcon("src/Assets/easy.png");
+    ImageIcon mediumImg = new ImageIcon("src/Assets/medium.png");
+    ImageIcon hardImg = new ImageIcon("src/Assets/hard.png");
 
-    ImageIcon easyHover = new ImageIcon("Assets/easy_hover.png");
-    ImageIcon mediumHover = new ImageIcon("Assets/medium_hover.png");
-    ImageIcon hardHover = new ImageIcon("Assets/hard_hover.png");
+    ImageIcon easyHover = new ImageIcon("src/Assets/easy_hover.png");
+    ImageIcon mediumHover = new ImageIcon("src/Assets/medium_hover.png");
+    ImageIcon hardHover = new ImageIcon("src/Assets/hard_hover.png");
 
 
     public menuLevel(){
@@ -36,7 +36,7 @@ public class menuLevel extends JFrame implements MouseListener {
         panelJudul.setBounds(0, 200, 780, 80);
 
         JLabel judul = new JLabel();
-        ImageIcon logo = new ImageIcon("Assets/choose.png");
+        ImageIcon logo = new ImageIcon("src/Assets/choose.png");
         judul.setIcon(imageResize(logo, 710, 80));
 
         //Panel for level
@@ -67,7 +67,7 @@ public class menuLevel extends JFrame implements MouseListener {
 
         //Background Image
         JLabel bg = new JLabel();
-        bg.setIcon(new ImageIcon("Assets/background.png"));
+        bg.setIcon(new ImageIcon("src/Assets/background.png"));
         Dimension size = bg.getPreferredSize();
         bg.setBounds(0, 0, size.width, size.height);
         setSize(800,800);
@@ -92,6 +92,19 @@ public class menuLevel extends JFrame implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        if (e.getSource()==easy){
+            dispose();
+            new Main();
+
+        }
+        if (e.getSource()==medium){
+            dispose();
+
+        }
+        if (e.getSource()==hard){
+            dispose();
+
+        }
         // TODO Auto-generated method stub
         // throw new UnsupportedOperationException("Unimplemented method 'mouseClicked'");
     }
