@@ -22,8 +22,6 @@ public class historyScore extends JFrame {
         historyTitle.setIcon(imageResize(titleImage, 750, 100));
         historyTitle.setHorizontalAlignment(JLabel.CENTER);
 
-
-
         //Background Image
         JLabel bg = new JLabel();
         bg.setIcon(new ImageIcon("Assets/background.png"));
@@ -32,7 +30,7 @@ public class historyScore extends JFrame {
         setLayout(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800,800);
-        setTitle("Score History");
+        setTitle("Minesweeper/Score History");
         setResizable(false);
         setVisible(true);
 
