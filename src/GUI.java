@@ -92,7 +92,9 @@ public class GUI extends JFrame {
         public void paintComponent(Graphics g) {
             Graphics2D g2D = (Graphics2D) g;
             g.setColor(Color.darkGray);
-            g.fillRect(0, 0, 1280, 800);
+            g2D.drawImage(new ImageIcon("src/Assets/background.png").getImage(),0,0,1280,800,null);
+//            g.fillRect(0, 0, 1280, 800);
+
             g.setColor(Color.gray);
             for (int i = 0; i < 16; i++) {
                 for (int j = 0; j < 9; j++) {
@@ -116,11 +118,12 @@ public class GUI extends JFrame {
                             g.setColor(Color.red);
                         }
                     }
-                    for (Mines tMines : mines) {
-                        if (i == tMines.getX() && j == tMines.getY()) {
-                            g.setColor(Color.yellow);
-                        }
-                    }
+//                    =============================Developer mode==========================================
+//                    for (Mines tMines : mines) {
+//                        if (i == tMines.getX() && j == tMines.getY()) {
+//                            g.setColor(Color.yellow);
+//                        }
+//                    }
 
                     g.fillRect(spacing + i * boxWidth, spacing + j * boxWidth + boxWidth, boxWidth - 2 * spacing,
                             boxWidth - 2 * spacing);
