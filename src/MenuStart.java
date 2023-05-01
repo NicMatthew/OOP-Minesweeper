@@ -17,11 +17,11 @@ public class MenuStart extends JFrame implements MouseListener {
     JLabel start;
     JLabel quit;
     JLabel history;
-    ImageIcon historyImage = new ImageIcon("src/Assets/historyLogo.png");
-    ImageIcon startImage = new ImageIcon("src/Assets/start.png");
-    ImageIcon quitImage = new ImageIcon("src/Assets/quit.png");
-    ImageIcon startImageHover = new ImageIcon("src/Assets/start_hover.png");
-    ImageIcon quitImageHover = new ImageIcon("src/Assets/quit_hover.png");
+    ImageIcon historyImage = new ImageIcon("Assets/historyLogo.png");
+    ImageIcon startImage = new ImageIcon("Assets/start.png");
+    ImageIcon quitImage = new ImageIcon("Assets/quit.png");
+    ImageIcon startImageHover = new ImageIcon("Assets/start_hover.png");
+    ImageIcon quitImageHover = new ImageIcon("Assets/quit_hover.png");
 
     public MenuStart() {
         start = new JLabel();
@@ -42,7 +42,7 @@ public class MenuStart extends JFrame implements MouseListener {
         panelJudul.setBackground(new Color(0, 0, 0,0));
         panelJudul.setBounds(0, 200, 780, 100);
         JLabel judul = new JLabel();
-        ImageIcon logo = new ImageIcon("src/Assets/title_text.png");
+        ImageIcon logo = new ImageIcon("Assets/title_text.png");
         judul.setIcon(imageResize(logo, 700, 120));
         // judul.setBounds(0,0,500,100);
         panelJudul.add(judul);
@@ -66,7 +66,7 @@ public class MenuStart extends JFrame implements MouseListener {
         start.addMouseListener(this);
         quit.addMouseListener(this);
         JLabel bg = new JLabel();
-        bg.setIcon(new ImageIcon("src/Assets/background.png"));
+        bg.setIcon(new ImageIcon("Assets/background.png"));
         Dimension size = bg.getPreferredSize();
         bg.setBounds(0, 0, size.width, size.height);
         
