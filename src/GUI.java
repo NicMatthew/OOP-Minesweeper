@@ -23,6 +23,16 @@ public class GUI extends JFrame {
     // int count_mines = 16;
     int mx = -100;
     int my = -100;
+    ImageIcon easyImg = new ImageIcon("src/Assets/easy.png");
+    ImageIcon mediumImg = new ImageIcon("src/Assets/medium.png");
+    ImageIcon hardImg = new ImageIcon("src/Assets/hard.png");
+    ImageIcon time_count = new ImageIcon("src/Assets/Boxes/time_count.png");
+    ImageIcon flag_count = new ImageIcon("src/Assets/Boxes/flag_count.png");
+
+    JPanel header;
+    JLabel level;
+    JLabel time;
+    JLabel flag;
     ArrayList<Integer> cx = new ArrayList<>();
     ArrayList<Integer> cy = new ArrayList<>();
     ArrayList<Mines> mines = new ArrayList<>();
@@ -32,11 +42,12 @@ public class GUI extends JFrame {
     private int mine;
 
     public GUI(int mine) {
+        header = new JPanel();
+        level = new JLabel();
+        time = new JLabel();
+        flag = new JLabel();
         this.mine = mine;
-//        for (int i = 1; i < 9; i++) {
-//            var path = "Assets/Boxes/"+i+".png";
-//            images.add(new ImageIcon(path).getImage());
-//        }
+
         images.add(new ImageIcon("src/Assets/Boxes/nol.png").getImage());
         images.add(new ImageIcon("src/Assets/Boxes/1.png").getImage());
         images.add(new ImageIcon("src/Assets/Boxes/2.png").getImage());
@@ -46,6 +57,26 @@ public class GUI extends JFrame {
         images.add(new ImageIcon("src/Assets/Boxes/6.png").getImage());
         images.add(new ImageIcon("src/Assets/Boxes/7.png").getImage());
         images.add(new ImageIcon("src/Assets/Boxes/8.png").getImage());
+        header = new JPanel(new GridLayout(1,3));
+        time.setIcon(imageResize(time_count,150,80));
+        flag.setIcon(imageResize(flag_count,150,80));
+        if (mine==15){
+//            Easy
+            level.setIcon(imageResize(easyImg,150,75));
+        } else if (mine==25) {
+//            Medium
+            level.setIcon(imageResize(mediumImg,200,75));
+
+        }else{
+//            Hard
+            level.setIcon(imageResize(hardImg,200,75));
+        }
+        header.add(level);
+        header.add(time);
+        header.add(flag);
+        header.setBounds(0,99,450,75);
+        header.setOpaque(false);
+        header.setBackground(new Color(0,0,0,0));
 
 
 
@@ -84,12 +115,21 @@ public class GUI extends JFrame {
         this.addMouseMotionListener(move);
         CLick click = new CLick();
         this.addMouseListener(click);
+        add(header);
     }
     public int getIndexSafeBox(int x , int y){
         for (int i = 0; i < safeBox.size(); i++) {
             if(x == safeBox.get(i).getX() && y == safeBox.get(i).getY())return i;
         }
         return -1;
+    }
+    public static ImageIcon imageResize(ImageIcon image, int width, int height) {
+        ImageIcon lama = image;
+        Image lama1 = lama.getImage();
+        Image baru1 = lama1.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
+        ImageIcon baru = new ImageIcon(baru1);
+
+        return baru;
     }
 
     public class Board extends JPanel {
@@ -133,12 +173,14 @@ public class GUI extends JFrame {
                     }
                     if(cekdraw == true){continue;
                     }
-////                    =============================Developer mode==========================================
-//                    for (Mines tMines : mines) {
-//                        if (i == tMines.getX() && j == tMines.getY()) {
+//                    =============================Developer mode==========================================
+                    for (Mines tMines : mines) {
+                        if (i == tMines.getX() && j == tMines.getY()) {
 //                            g.setColor(Color.yellow);
-//                        }
-//                    }
+                            g2D.drawImage(new ImageIcon("src/Assets/Boxes/bomb.png").getImage(),spacing + i * boxWidth,spacing + j * boxWidth + boxWidth,boxWidth - 2 * spacing,boxWidth - 2 * spacing,null);
+
+                        }
+                    }
                     g2D.drawImage(new ImageIcon("src/Assets/Boxes/box.png").getImage(),spacing + i * boxWidth,spacing + j * boxWidth + boxWidth,boxWidth - 2 * spacing,boxWidth - 2 * spacing,null);
 //                    g.fillRect(spacing + i * boxWidth, spacing + j * boxWidth + boxWidth, boxWidth - 2 * spacing,
 //                            boxWidth - 2 * spacing);
