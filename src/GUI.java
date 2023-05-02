@@ -96,7 +96,7 @@ public class GUI extends JFrame {
                 boolean cek = true;
                 for (Mines tmine: mines) {
                     if(i == tmine.getX() && j == tmine.getY()){
-                        cek =false;
+                        cek = false;
                     }
                 }
                 if(cek ==true){
@@ -228,6 +228,7 @@ public class GUI extends JFrame {
         
         if(!cekmines(x, y)){
             System.exit(0);
+//            buat exit
         }
         if(!cekclicked(x, y))return;
                     cx.add(x);
