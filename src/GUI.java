@@ -227,7 +227,7 @@ public class GUI extends JFrame {
         }
         
         if(!cekmines(x, y)){
-            System.exit(0);
+//            System.exit(0);
 //            buat exit
         }
         if(!cekclicked(x, y))return;
