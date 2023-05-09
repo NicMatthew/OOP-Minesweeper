@@ -1,13 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.*;
 import java.awt.Graphics;
 // import java.awt.Dimension;
 // import java.awt.Image;
 // import java.awt.event.MouseAdapter;
 // import java.awt.event.MouseEvent;
+import java.io.FileOutputStream;
 import java.util.Random;
 // import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -28,6 +27,7 @@ public class GUI extends JFrame {
     ImageIcon hardImg = new ImageIcon("src/Assets/hard.png");
     ImageIcon time_count = new ImageIcon("src/Assets/Boxes/time_count.png");
     ImageIcon flag_count = new ImageIcon("src/Assets/Boxes/flag_count.png");
+    private Timer timer;
 
     JPanel header;
     JLabel level;
@@ -40,11 +40,42 @@ public class GUI extends JFrame {
     ArrayList<Image> images = new ArrayList<>();
     ArrayList<boxes> flags = new ArrayList<>();
     private int mine;
+    private JPanel timerPanel;
+    private JLabel timerLabel;
+    private int seconds=1000;
+    private void startTimer() {
+        timer = new Timer(1000, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                seconds--;
+                timerLabel.setText(String.format(""+seconds));
+                if (seconds==0){
+                    stopTimer();
+
+                }
+            }
+        });
+        timer.start();
+    }
+    private void stopTimer() {
+        timer.stop();
+    }
+
+
 
     public GUI(int mine) {
+
+//        TIMERRRRR
+        timerPanel = new JPanel(new GridLayout(1,1));
+        timerLabel = new JLabel();
+        timerPanel.add(timerLabel);
+
+
+
         header = new JPanel();
         level = new JLabel();
         time = new JLabel();
+//        time.setForeground(Color.white);
+        startTimer();
         flag = new JLabel();
         this.mine = mine;
 
@@ -59,6 +90,7 @@ public class GUI extends JFrame {
         images.add(new ImageIcon("src/Assets/Boxes/8.png").getImage());
         header = new JPanel(new GridLayout(1,3));
         time.setIcon(imageResize(time_count,150,80));
+
         flag.setIcon(imageResize(flag_count,150,80));
         if (mine==15){
 //            Easy
@@ -77,6 +109,8 @@ public class GUI extends JFrame {
         header.setBounds(0,99,450,75);
         header.setOpaque(false);
         header.setBackground(new Color(0,0,0,0));
+        timerPanel.setBackground(Color.red);
+        timerPanel.setBounds(0,0,150,75);
 
 
 
@@ -115,7 +149,9 @@ public class GUI extends JFrame {
         this.addMouseMotionListener(move);
         CLick click = new CLick();
         this.addMouseListener(click);
+        add(timerPanel);
         add(header);
+
     }
     public int getIndexSafeBox(int x , int y){
         for (int i = 0; i < safeBox.size(); i++) {
