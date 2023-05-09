@@ -6,10 +6,13 @@ import java.awt.Graphics;
 // import java.awt.Image;
 // import java.awt.event.MouseAdapter;
 // import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Random;
 // import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 // /testtttttt
 import java.util.ArrayList;
 
@@ -25,14 +28,15 @@ public class GUI extends JFrame {
     ImageIcon easyImg = new ImageIcon("src/Assets/easy.png");
     ImageIcon mediumImg = new ImageIcon("src/Assets/medium.png");
     ImageIcon hardImg = new ImageIcon("src/Assets/hard.png");
-    ImageIcon time_count = new ImageIcon("src/Assets/Boxes/time_count.png");
-    ImageIcon flag_count = new ImageIcon("src/Assets/Boxes/flag_count.png");
+    ImageIcon time_count = new ImageIcon("src/Assets/Boxes/time.png");
+    ImageIcon flag_count = new ImageIcon("src/Assets/Boxes/flag.png");
     private Timer timer;
 
     JPanel header;
     JLabel level;
     JLabel time;
     JLabel flag;
+    JLabel flagCounter;
     ArrayList<Integer> cx = new ArrayList<>();
     ArrayList<Integer> cy = new ArrayList<>();
     ArrayList<Mines> mines = new ArrayList<>();
@@ -42,7 +46,8 @@ public class GUI extends JFrame {
     private int mine;
     private JPanel timerPanel;
     private JLabel timerLabel;
-    private int seconds=1000;
+    private int seconds =999;
+    private Font arcade;
     private void startTimer() {
         timer = new Timer(1000, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -63,20 +68,26 @@ public class GUI extends JFrame {
 
 
     public GUI(int mine) {
+        Border margin = new EmptyBorder(0,50,0,0);
 
-//        TIMERRRRR
-        timerPanel = new JPanel(new GridLayout(1,1));
-        timerLabel = new JLabel();
-        timerPanel.add(timerLabel);
+        try{
+            arcade = Font.createFont(Font.TRUETYPE_FONT,new File("src/Assets/ARCADE_N.TTF")).deriveFont(25f);
+        }catch (Exception e){
 
-
-
+        }
         header = new JPanel();
         level = new JLabel();
         time = new JLabel();
+        timerLabel = new JLabel("999");
+        timerLabel.setFont(arcade);
+        timerLabel.setForeground(Color.WHITE);
 //        time.setForeground(Color.white);
         startTimer();
         flag = new JLabel();
+        flag.setBorder(margin);
+        flagCounter = new JLabel(""+mine);
+        flagCounter.setFont(arcade);
+        flagCounter.setForeground(Color.WHITE);
         this.mine = mine;
 
         images.add(new ImageIcon("src/Assets/Boxes/nol.png").getImage());
@@ -88,13 +99,14 @@ public class GUI extends JFrame {
         images.add(new ImageIcon("src/Assets/Boxes/6.png").getImage());
         images.add(new ImageIcon("src/Assets/Boxes/7.png").getImage());
         images.add(new ImageIcon("src/Assets/Boxes/8.png").getImage());
-        header = new JPanel(new GridLayout(1,3));
-        time.setIcon(imageResize(time_count,150,80));
+        header = new JPanel();
+        header.setAlignmentY(10);
+        time.setIcon(imageResize(time_count,70,70));
 
-        flag.setIcon(imageResize(flag_count,150,80));
+        flag.setIcon(imageResize(flag_count,50,50));
         if (mine==15){
 //            Easy
-            level.setIcon(imageResize(easyImg,150,75));
+            level.setIcon(imageResize(easyImg,200,75));
         } else if (mine==25) {
 //            Medium
             level.setIcon(imageResize(mediumImg,200,75));
@@ -105,12 +117,12 @@ public class GUI extends JFrame {
         }
         header.add(level);
         header.add(time);
+        header.add(timerLabel);
         header.add(flag);
+        header.add(flagCounter);
         header.setBounds(0,99,450,75);
         header.setOpaque(false);
         header.setBackground(new Color(0,0,0,0));
-        timerPanel.setBackground(Color.red);
-        timerPanel.setBounds(0,0,150,75);
 
 
 
@@ -149,7 +161,6 @@ public class GUI extends JFrame {
         this.addMouseMotionListener(move);
         CLick click = new CLick();
         this.addMouseListener(click);
-        add(timerPanel);
         add(header);
 
     }
@@ -355,12 +366,14 @@ public class GUI extends JFrame {
                 int x = getindex_X(e.getX());
                 int y = getindex_Y(e.getY());
 
+
                 System.out.println("flag : "+ flags.size());
                 if ((x != -1 && y != -1) && !isFlag(x,y)) {
                     recursiveClick(x, y, x, y);
                 }
             }
             if(e.getButton()==3){
+
 //                System.out.println("klik kanan");
                 int x = getindex_X(e.getX());
                 int y = getindex_Y(e.getY());
@@ -375,6 +388,7 @@ public class GUI extends JFrame {
                 if (x != -1 && y != -1 && cekk == false && cekclicked(x,y) && flags.size() <= mine){
                     flags.add(new boxes(x,y));
                 }
+                flagCounter.setText(""+(mines.size()-flags.size()));
             }
         }
 
