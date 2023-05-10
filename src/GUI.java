@@ -22,7 +22,10 @@ public class GUI extends JFrame {
     int spacing = 5;
     int boxWidth = 80;
     Random random = new Random();
-    boolean status = true;
+    int status = 0;
+//    0 default
+//    1 menang
+//    -1 kalah
     // int count_mines = 16;
     int mx = -100;
     int my = -100;
@@ -49,6 +52,9 @@ public class GUI extends JFrame {
     private JLabel timerLabel;
     private int seconds =999;
     private Font arcade;
+    private Font arcade_big;
+    int multiplier;
+    int score;
     private void startTimer() {
         timer = new Timer(1000, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -73,6 +79,7 @@ public class GUI extends JFrame {
 
         try{
             arcade = Font.createFont(Font.TRUETYPE_FONT,new File("src/Assets/ARCADE_N.TTF")).deriveFont(25f);
+            arcade_big = Font.createFont(Font.TRUETYPE_FONT,new File("src/Assets/ARCADE_N.TTF")).deriveFont(45f);
         }catch (Exception e){
 
         }
@@ -108,13 +115,16 @@ public class GUI extends JFrame {
         if (mine==15){
 //            Easy
             level.setIcon(imageResize(easyImg,200,75));
+            multiplier = 1;
         } else if (mine==25) {
 //            Medium
             level.setIcon(imageResize(mediumImg,200,75));
+            multiplier = 2;
 
         }else{
 //            Hard
             level.setIcon(imageResize(hardImg,200,75));
+            multiplier = 3;
         }
         header.add(level);
         header.add(time);
@@ -184,20 +194,31 @@ public class GUI extends JFrame {
         public void paintComponent(Graphics g) {
 
             Graphics2D g2D = (Graphics2D) g;
-            g.setColor(Color.darkGray);
+//            g.setColor(Color.darkGray);
             g2D.drawImage(new ImageIcon("src/Assets/background.png").getImage(),0,0,1280,800,null);
 //            g.fillRect(0, 0, 1280, 800);
 
-            g.setColor(Color.gray);
+            g.setColor(Color.blue);
+            g2D.setFont(arcade_big);
             for (int i = 0; i < 16; i++) {
                 for (int j = 0; j < 9; j++) {
+//                    kondisi menang
+                    if ((cx.size()+cy.size())/2 == (16*9)-mine){
+                        status = 1;
+                        timer.stop();
+                        score = seconds*multiplier;
+                        g2D.drawImage(new ImageIcon("src/Assets/Boxes/win_page.png").getImage(),350,250,600,300,null);
+                        g2D.drawString(""+score,660,435);
+//                        return;
+                    }
+
                     boolean cekdraw = false;
                     for (int j2 = 0; j2 < cx.size(); j2++) {
                         if (cx.get(j2) == i && cy.get(j2) == j) {
 //                            g.setColor(Color.blue);
                             g2D.drawImage(images.get(safeBox.get(getIndexSafeBox(i,j)).getMineAround()),spacing + i * boxWidth, spacing + j * boxWidth + boxWidth, boxWidth - 2 * spacing,
                                     boxWidth - 2 * spacing,null);
-                            g.setColor(Color.gray);
+//                            g.setColor(Color.gray);
                             cekdraw =true;
                             break;
 
@@ -223,26 +244,28 @@ public class GUI extends JFrame {
                     if(cekdraw == true){continue;
                     }
 //                    =============================Developer mode==========================================
-
+                    for (Mines tMines : mines) {
+                        if (i == tMines.getX() && j == tMines.getY()) {
+                            g2D.drawImage(new ImageIcon("src/Assets/Boxes/bomb.png").getImage(),spacing + i * boxWidth,spacing + j * boxWidth + boxWidth,boxWidth - 2 * spacing,boxWidth - 2 * spacing,null);
+                        }
+                    }
                     g2D.drawImage(new ImageIcon("src/Assets/Boxes/box.png").getImage(),spacing + i * boxWidth,spacing + j * boxWidth + boxWidth,boxWidth - 2 * spacing,boxWidth - 2 * spacing,null);
-//                    g.fillRect(spacing + i * boxWidth, spacing + j * boxWidth + boxWidth, boxWidth - 2 * spacing,
-//                            boxWidth - 2 * spacing);
-//                    g.setColor(Color.gray);
-                    if(status==false){
+                    if(status==-1){
                         timer.stop();
                         for (Mines tMines : mines) {
                             if (i == tMines.getX() && j == tMines.getY()) {
-//                            g.setColor(Color.yellow);
                                 g2D.drawImage(new ImageIcon("src/Assets/Boxes/bomb.png").getImage(),spacing + i * boxWidth,spacing + j * boxWidth + boxWidth,boxWidth - 2 * spacing,boxWidth - 2 * spacing,null);
                             }
                         }
-//                        show game over
                         g2D.drawImage(new ImageIcon("src/Assets/Boxes/lose_page.png").getImage(),350,250,600,300,null);
-
                     }
-                    if(){
 
-                    }
+//                    g.fillRect(spacing + i * boxWidth, spacing + j * boxWidth + boxWidth, boxWidth - 2 * spacing,
+//                            boxWidth - 2 * spacing);
+//                    g.setColor(Color.gray);
+//                    kondisi kalah buat repaint bomb
+
+
 
                 }
             }
@@ -288,7 +311,7 @@ public class GUI extends JFrame {
         if(!cekmines(x, y)){
 //            System.exit(0);
 //            buat exit
-            status = false;
+            status = -1;
             return;
 
         }
@@ -377,7 +400,7 @@ public class GUI extends JFrame {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            if(status==false){
+            if(status==-1||status==1){
                 return;
             }
 
