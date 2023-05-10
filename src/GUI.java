@@ -22,6 +22,7 @@ public class GUI extends JFrame {
     int spacing = 5;
     int boxWidth = 80;
     Random random = new Random();
+    boolean status = true;
     // int count_mines = 16;
     int mx = -100;
     int my = -100;
@@ -181,6 +182,7 @@ public class GUI extends JFrame {
 
     public class Board extends JPanel {
         public void paintComponent(Graphics g) {
+
             Graphics2D g2D = (Graphics2D) g;
             g.setColor(Color.darkGray);
             g2D.drawImage(new ImageIcon("src/Assets/background.png").getImage(),0,0,1280,800,null);
@@ -221,17 +223,27 @@ public class GUI extends JFrame {
                     if(cekdraw == true){continue;
                     }
 //                    =============================Developer mode==========================================
-                    for (Mines tMines : mines) {
-                        if (i == tMines.getX() && j == tMines.getY()) {
-//                            g.setColor(Color.yellow);
-                            g2D.drawImage(new ImageIcon("src/Assets/Boxes/bomb.png").getImage(),spacing + i * boxWidth,spacing + j * boxWidth + boxWidth,boxWidth - 2 * spacing,boxWidth - 2 * spacing,null);
 
-                        }
-                    }
                     g2D.drawImage(new ImageIcon("src/Assets/Boxes/box.png").getImage(),spacing + i * boxWidth,spacing + j * boxWidth + boxWidth,boxWidth - 2 * spacing,boxWidth - 2 * spacing,null);
 //                    g.fillRect(spacing + i * boxWidth, spacing + j * boxWidth + boxWidth, boxWidth - 2 * spacing,
 //                            boxWidth - 2 * spacing);
 //                    g.setColor(Color.gray);
+                    if(status==false){
+                        timer.stop();
+                        for (Mines tMines : mines) {
+                            if (i == tMines.getX() && j == tMines.getY()) {
+//                            g.setColor(Color.yellow);
+                                g2D.drawImage(new ImageIcon("src/Assets/Boxes/bomb.png").getImage(),spacing + i * boxWidth,spacing + j * boxWidth + boxWidth,boxWidth - 2 * spacing,boxWidth - 2 * spacing,null);
+                            }
+                        }
+//                        show game over
+                        g2D.drawImage(new ImageIcon("src/Assets/Boxes/lose_page.png").getImage(),350,250,600,300,null);
+
+                    }
+                    if(){
+
+                    }
+
                 }
             }
         }
@@ -276,6 +288,9 @@ public class GUI extends JFrame {
         if(!cekmines(x, y)){
 //            System.exit(0);
 //            buat exit
+            status = false;
+            return;
+
         }
         if(!cekclicked(x, y))return;
                     cx.add(x);
@@ -359,8 +374,13 @@ public class GUI extends JFrame {
 
     public class CLick implements MouseListener {
 
+
         @Override
         public void mouseClicked(MouseEvent e) {
+            if(status==false){
+                return;
+            }
+
             if(e.getButton()==1){
                 System.out.println("Clicked");
                 int x = getindex_X(e.getX());
@@ -371,6 +391,7 @@ public class GUI extends JFrame {
                 if ((x != -1 && y != -1) && !isFlag(x,y)) {
                     recursiveClick(x, y, x, y);
                 }
+                flagCounter.setText(""+(mines.size()-flags.size()));
             }
             if(e.getButton()==3){
 
